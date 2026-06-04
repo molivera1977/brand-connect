@@ -1,0 +1,1784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BrandConnect — The Influencer's Playbook</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #0E0C09;
+  --cream: #F8F4EE;
+  --gold: #C9A45A;
+  --gold2: #E8D49A;
+  --rust: #B85C38;
+  --sage: #4A6741;
+  --warm: #7A6F65;
+  --border: rgba(201,164,90,0.2);
+  --card: rgba(255,255,255,0.05);
+  --glass: rgba(14,12,9,0.75);
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; font-size:16px; }
+
+body {
+  font-family:'Outfit', sans-serif;
+  background: var(--ink);
+  color: var(--cream);
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* ── CURSOR ── */
+.cursor {
+  position: fixed;
+  width: 10px; height: 10px;
+  background: var(--gold);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%,-50%);
+  transition: transform 0.1s, width 0.3s, height 0.3s, opacity 0.3s;
+  mix-blend-mode: difference;
+}
+.cursor-ring {
+  position: fixed;
+  width: 36px; height: 36px;
+  border: 1px solid var(--gold);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%,-50%);
+  transition: all 0.15s ease;
+  opacity: 0.6;
+}
+body:hover .cursor { opacity:1; }
+
+/* ── PROGRESS BAR ── */
+#progress-bar {
+  position: fixed;
+  top: 0; left: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--gold), var(--rust));
+  z-index: 200;
+  width: 0%;
+  transition: width 0.1s linear;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 0 6vw;
+  height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(14,12,9,0.88);
+  backdrop-filter: blur(20px) saturate(1.4);
+  border-bottom: 1px solid var(--border);
+}
+.logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.3rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  color: var(--cream);
+}
+.logo span { color: var(--gold); font-style: italic; }
+
+.nav-links { display:flex; gap:2rem; list-style:none; }
+.nav-links a {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--warm);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--gold); }
+
+/* ── SECTION INDICATOR ── */
+.section-dots {
+  position: fixed;
+  right: 2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  z-index: 90;
+}
+.dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--warm);
+  transition: all 0.3s;
+  cursor: pointer;
+}
+.dot.active {
+  background: var(--gold);
+  transform: scale(1.5);
+}
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  padding: 0 8vw 8vh;
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background-image: url('HERO_IMAGE_URL');
+  background-size: cover;
+  background-position: center 30%;
+  filter: brightness(0.45) saturate(0.8);
+  transform: scale(1.05);
+  animation: heroZoom 20s ease-in-out infinite alternate;
+}
+
+.hero-bg-fallback {
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(ellipse 80% 60% at 60% 40%, rgba(201,164,90,0.12) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 80% at 20% 70%, rgba(184,92,56,0.08) 0%, transparent 60%),
+    linear-gradient(160deg, #1a1510 0%, #0e0c09 50%, #12100d 100%);
+}
+
+@keyframes heroZoom {
+  from { transform: scale(1.05); }
+  to { transform: scale(1.12); }
+}
+
+.hero-grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  pointer-events: none;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(14,12,9,0.97) 0%,
+    rgba(14,12,9,0.6) 40%,
+    rgba(14,12,9,0.15) 100%
+  );
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 700px;
+}
+
+.hero-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.3s ease forwards;
+}
+
+.hero-eyebrow::before {
+  content: '';
+  width: 36px; height: 1px;
+  background: var(--gold);
+}
+
+.hero h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(3.5rem, 7vw, 6.5rem);
+  font-weight: 600;
+  line-height: 1.0;
+  letter-spacing: -0.02em;
+  margin-bottom: 1.5rem;
+  opacity: 0;
+  animation: fadeUp 0.9s 0.5s ease forwards;
+}
+
+.hero h1 em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+.hero-sub {
+  font-size: 1.05rem;
+  font-weight: 300;
+  color: rgba(248,244,238,0.65);
+  max-width: 480px;
+  line-height: 1.8;
+  margin-bottom: 3rem;
+  opacity: 0;
+  animation: fadeUp 0.9s 0.7s ease forwards;
+}
+
+.hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  opacity: 0;
+  animation: fadeUp 0.9s 0.9s ease forwards;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: var(--gold);
+  color: var(--ink);
+  padding: 1rem 2.2rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0.15);
+  transform: translateX(-100%);
+  transition: transform 0.4s ease;
+}
+.btn-primary:hover::after { transform: translateX(0); }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(201,164,90,0.3); }
+
+.btn-ghost {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(248,244,238,0.5);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: color 0.2s;
+}
+.btn-ghost:hover { color: var(--gold); }
+
+.hero-stats {
+  position: absolute;
+  right: 8vw;
+  bottom: 8vh;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  opacity: 0;
+  animation: fadeLeft 1s 1.1s ease forwards;
+}
+
+.hero-stat {
+  text-align: right;
+}
+
+.hero-stat-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: var(--gold);
+  line-height: 1;
+}
+
+.hero-stat-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--warm);
+  margin-top: 0.2rem;
+}
+
+/* ── MARQUEE ── */
+.marquee-wrap {
+  overflow: hidden;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: rgba(201,164,90,0.04);
+  padding: 1rem 0;
+}
+
+.marquee-track {
+  display: flex;
+  gap: 3rem;
+  white-space: nowrap;
+  animation: marquee 30s linear infinite;
+  width: max-content;
+}
+
+.marquee-item {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--warm);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.marquee-item::after {
+  content: '◆';
+  color: var(--gold);
+  font-size: 0.5rem;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* ── SECTIONS SHARED ── */
+section { padding: 120px 8vw; }
+
+.section-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.section-tag::before {
+  content: '';
+  width: 28px; height: 1px;
+  background: var(--gold);
+}
+
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.2rem, 4vw, 3.5rem);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  margin-bottom: 1rem;
+}
+.section-title em { font-style: italic; color: var(--gold); }
+
+.section-sub {
+  font-size: 0.95rem;
+  font-weight: 300;
+  color: rgba(248,244,238,0.55);
+  max-width: 520px;
+  line-height: 1.8;
+  margin-bottom: 4rem;
+}
+
+/* ── STRATEGY SECTION ── */
+#strategies { background: var(--ink); }
+
+.strategies-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+
+.s-card {
+  background: #100E0B;
+  padding: 2.5rem 2rem;
+  position: relative;
+  overflow: hidden;
+  transition: background 0.3s;
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.5s ease, transform 0.5s ease, background 0.3s;
+}
+.s-card.visible { opacity:1; transform:translateY(0); }
+.s-card:hover { background: #161310; }
+
+.s-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  transform: scaleX(0);
+  transition: transform 0.4s ease;
+}
+.s-card:hover::before { transform: scaleX(1); }
+
+.s-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 4rem;
+  font-weight: 400;
+  color: rgba(201,164,90,0.12);
+  line-height: 1;
+  margin-bottom: 1.2rem;
+  transition: color 0.3s;
+}
+.s-card:hover .s-num { color: rgba(201,164,90,0.25); }
+
+.s-icon {
+  font-size: 1.4rem;
+  margin-bottom: 0.8rem;
+}
+
+.s-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.35rem;
+  font-weight: 600;
+  margin-bottom: 0.8rem;
+  color: var(--cream);
+}
+
+.s-text {
+  font-size: 0.85rem;
+  font-weight: 300;
+  color: rgba(248,244,238,0.55);
+  line-height: 1.75;
+}
+
+.s-tip {
+  margin-top: 1.2rem;
+  padding: 0.7rem 1rem;
+  background: rgba(201,164,90,0.06);
+  border-left: 2px solid var(--gold);
+  font-size: 0.78rem;
+  color: var(--gold2);
+  font-style: italic;
+  line-height: 1.5;
+}
+
+/* ── AFFILIATE ── */
+#affiliate {
+  background: linear-gradient(180deg, #0a0907 0%, #100e0b 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+#affiliate::before {
+  content: '';
+  position: absolute;
+  top: -200px; left: -200px;
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(201,164,90,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.affiliate-hero-img {
+  width: 100%;
+  max-height: 360px;
+  object-fit: cover;
+  object-position: center 40%;
+  margin-bottom: 5rem;
+  border: 1px solid var(--border);
+  filter: brightness(0.85) saturate(0.9);
+  display: block;
+}
+
+.affiliate-hero-fallback {
+  width: 100%;
+  height: 260px;
+  margin-bottom: 5rem;
+  background: 
+    radial-gradient(ellipse 60% 80% at 80% 50%, rgba(201,164,90,0.1) 0%, transparent 60%),
+    linear-gradient(135deg, #1a1510 0%, #0d0b08 100%);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flow-steps {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  margin-bottom: 5rem;
+  position: relative;
+}
+
+.flow-step {
+  flex: 1;
+  padding: 2rem 1.5rem 2rem 0;
+  position: relative;
+}
+
+.flow-step:not(:last-child)::after {
+  content: '→';
+  position: absolute;
+  right: -0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--gold);
+  font-size: 1.2rem;
+  opacity: 0.5;
+}
+
+.flow-num {
+  width: 48px; height: 48px;
+  border: 1px solid var(--gold);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--gold);
+  margin-bottom: 1rem;
+}
+
+.flow-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.4rem;
+  color: var(--cream);
+}
+
+.flow-text {
+  font-size: 0.8rem;
+  font-weight: 300;
+  color: rgba(248,244,238,0.5);
+  line-height: 1.6;
+}
+
+.commission-table {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  margin-top: 3rem;
+}
+
+.comm-cell {
+  background: #100E0B;
+  padding: 1.8rem 1.5rem;
+  transition: background 0.2s;
+}
+.comm-cell:hover { background: #161310; }
+
+.comm-cat {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--warm);
+  margin-bottom: 0.6rem;
+}
+
+.comm-rate {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--gold);
+  line-height: 1;
+}
+
+.comm-example {
+  font-size: 0.76rem;
+  color: rgba(248,244,238,0.35);
+  margin-top: 0.3rem;
+}
+
+/* ── PLATFORMS ── */
+#platforms { background: #0b0907; }
+
+.tab-nav {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 3rem;
+}
+
+.tab-btn {
+  padding: 0.8rem 1.8rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--warm);
+  transition: color 0.2s;
+  position: relative;
+}
+
+.tab-btn.active { color: var(--cream); }
+.tab-btn.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px; left: 0; right: 0;
+  height: 1px;
+  background: var(--gold);
+}
+
+.tab-panel { display: none; }
+.tab-panel.active {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+
+.p-card {
+  background: #0f0d0a;
+  padding: 2rem;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  transition: background 0.25s;
+  position: relative;
+  overflow: hidden;
+}
+
+.p-card:hover { background: #161310; }
+
+.p-card::after {
+  content: '↗';
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  font-size: 0.85rem;
+  color: var(--warm);
+  transition: color 0.2s, transform 0.2s;
+}
+.p-card:hover::after { color: var(--gold); transform: translate(2px,-2px); }
+
+.p-badge {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.3rem;
+}
+
+.p-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--cream);
+}
+
+.p-desc {
+  font-size: 0.82rem;
+  font-weight: 300;
+  color: rgba(248,244,238,0.5);
+  line-height: 1.65;
+}
+
+.p-link {
+  margin-top: 0.8rem;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  color: rgba(201,164,90,0.6);
+  transition: color 0.2s;
+}
+.p-card:hover .p-link { color: var(--gold); }
+
+/* ── PITCH ── */
+#pitch {
+  background: var(--ink);
+  position: relative;
+}
+
+.pitch-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: start;
+}
+
+.pitch-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 1px solid var(--border);
+}
+
+.pitch-step {
+  padding: 1.8rem 2rem;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+  transition: background 0.2s;
+}
+.pitch-step:last-child { border-bottom: none; }
+.pitch-step:hover { background: rgba(201,164,90,0.03); }
+
+.pitch-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  color: var(--gold);
+  background: rgba(201,164,90,0.1);
+  padding: 0.3rem 0.6rem;
+  flex-shrink: 0;
+  align-self: flex-start;
+  margin-top: 0.15rem;
+}
+
+.pitch-step-title {
+  font-weight: 600;
+  font-size: 0.92rem;
+  margin-bottom: 0.35rem;
+  color: var(--cream);
+}
+
+.pitch-step-text {
+  font-size: 0.82rem;
+  font-weight: 300;
+  color: rgba(248,244,238,0.5);
+  line-height: 1.65;
+}
+
+.pitch-email {
+  position: sticky;
+  top: 84px;
+  background: #0f0d0a;
+  border: 1px solid var(--border);
+  padding: 2.5rem;
+}
+
+.pitch-email-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.pitch-email-label::before {
+  content: '✦';
+  color: var(--gold);
+}
+
+.pitch-email-body {
+  font-size: 0.88rem;
+  font-weight: 300;
+  line-height: 1.9;
+  color: rgba(248,244,238,0.65);
+}
+
+.pitch-email-body strong { color: var(--cream); font-weight: 500; }
+.pitch-email-body .gold { color: var(--gold); font-style: italic; }
+
+/* ── MEDIA KIT ── */
+#mediakit { background: #080705; }
+
+.kit-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+
+.kit-item {
+  background: #0f0d0a;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  transition: background 0.2s;
+}
+.kit-item:hover { background: #141210; }
+
+.kit-check {
+  width: 32px; height: 32px;
+  border: 1px solid var(--gold);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gold);
+  font-size: 0.75rem;
+  margin-bottom: 0.5rem;
+  flex-shrink: 0;
+}
+
+.kit-title {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--cream);
+}
+
+.kit-desc {
+  font-size: 0.8rem;
+  font-weight: 300;
+  color: rgba(248,244,238,0.45);
+  line-height: 1.6;
+}
+
+/* ── MINDSET SECTION ── */
+#mindset {
+  background: var(--gold);
+  color: var(--ink);
+  text-align: center;
+  padding: 100px 8vw;
+}
+
+#mindset .section-tag { color: rgba(14,12,9,0.5); justify-content: center; }
+#mindset .section-tag::before { background: rgba(14,12,9,0.3); }
+
+.mindset-quote {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2rem, 4.5vw, 4rem);
+  font-weight: 600;
+  font-style: italic;
+  line-height: 1.2;
+  color: var(--ink);
+  max-width: 800px;
+  margin: 0 auto 2rem;
+}
+
+.mindset-sub {
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: rgba(14,12,9,0.65);
+  max-width: 500px;
+  margin: 0 auto;
+  line-height: 1.75;
+}
+
+/* ── ALL RESOURCES ── */
+#resources { background: #0b0907; }
+
+.resources-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+
+.r-card {
+  background: #0e0c09;
+  padding: 2rem;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  transition: background 0.2s;
+  position: relative;
+}
+.r-card:hover { background: #141210; }
+.r-card::after {
+  content: '↗';
+  position: absolute;
+  top: 1.5rem; right: 1.5rem;
+  color: var(--warm);
+  font-size: 0.85rem;
+  transition: all 0.2s;
+}
+.r-card:hover::after { color: var(--gold); transform: translate(2px,-2px); }
+
+.r-cat {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.r-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--cream);
+  margin-top: 0.1rem;
+}
+
+.r-note {
+  font-size: 0.79rem;
+  font-weight: 300;
+  color: rgba(248,244,238,0.42);
+  line-height: 1.6;
+}
+
+.r-url {
+  margin-top: 0.6rem;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.66rem;
+  color: rgba(201,164,90,0.5);
+}
+
+/* ── COUNTER STATS ── */
+.counter-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border: 1px solid var(--border);
+  margin-bottom: 5rem;
+}
+
+.counter-item {
+  padding: 2.5rem 2rem;
+  border-right: 1px solid var(--border);
+  text-align: center;
+}
+.counter-item:last-child { border-right: none; }
+
+.counter-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 3.5rem;
+  font-weight: 600;
+  color: var(--gold);
+  line-height: 1;
+  margin-bottom: 0.4rem;
+}
+
+.counter-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--warm);
+}
+
+/* ── FOOTER ── */
+footer {
+  background: #070604;
+  border-top: 1px solid var(--border);
+  padding: 4rem 8vw;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: start;
+}
+
+.footer-brand {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--cream);
+  margin-bottom: 0.8rem;
+}
+.footer-brand span { color: var(--gold); font-style: italic; }
+
+.footer-copy {
+  font-size: 0.82rem;
+  font-weight: 300;
+  color: var(--warm);
+  line-height: 1.8;
+  max-width: 380px;
+}
+
+.footer-note {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  color: rgba(122,111,101,0.5);
+  margin-top: 1.5rem;
+}
+
+.footer-links {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
+}
+
+.footer-link {
+  text-decoration: none;
+  font-size: 0.82rem;
+  font-weight: 300;
+  color: var(--warm);
+  transition: color 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.footer-link:hover { color: var(--gold); }
+.footer-link::before { content: '→'; font-size: 0.7rem; color: var(--gold); opacity: 0.6; }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(20px); }
+  to { opacity:1; transform:translateY(0); }
+}
+@keyframes fadeLeft {
+  from { opacity:0; transform:translateX(20px); }
+  to { opacity:1; transform:translateX(0); }
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width:1024px) {
+  .strategies-grid { grid-template-columns: repeat(2,1fr); }
+  .kit-grid { grid-template-columns: repeat(2,1fr); }
+  .counter-row { grid-template-columns: repeat(2,1fr); }
+  .commission-table { grid-template-columns: repeat(3,1fr); }
+}
+@media (max-width:768px) {
+  .strategies-grid { grid-template-columns: 1fr; }
+  .kit-grid { grid-template-columns: 1fr; }
+  .counter-row { grid-template-columns: 1fr 1fr; }
+  .commission-table { grid-template-columns: 1fr 1fr; }
+  .pitch-layout { grid-template-columns: 1fr; }
+  .pitch-email { position: static; }
+  .hero-stats { display: none; }
+  .nav-links { display: none; }
+  .section-dots { display: none; }
+  footer { grid-template-columns: 1fr; }
+  .flow-steps { flex-direction: column; }
+  .flow-step:not(:last-child)::after { content: '↓'; right: auto; left: 24px; top: auto; bottom: -1rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- PROGRESS -->
+<div id="progress-bar"></div>
+
+<!-- NAV -->
+<nav>
+  <a class="logo" href="#">Brand<span>Connect</span></a>
+  <ul class="nav-links">
+    <li><a href="#strategies">Strategies</a></li>
+    <li><a href="#affiliate">Affiliate</a></li>
+    <li><a href="#platforms">Platforms</a></li>
+    <li><a href="#pitch">Pitch</a></li>
+    <li><a href="#resources">Resources</a></li>
+  </ul>
+</nav>
+
+<!-- SECTION DOTS -->
+<div class="section-dots" id="sectionDots">
+  <div class="dot active" data-section="hero" onclick="scrollTo(0,0)"></div>
+  <div class="dot" data-section="strategies" onclick="document.getElementById('strategies').scrollIntoView({behavior:'smooth'})"></div>
+  <div class="dot" data-section="affiliate" onclick="document.getElementById('affiliate').scrollIntoView({behavior:'smooth'})"></div>
+  <div class="dot" data-section="platforms" onclick="document.getElementById('platforms').scrollIntoView({behavior:'smooth'})"></div>
+  <div class="dot" data-section="pitch" onclick="document.getElementById('pitch').scrollIntoView({behavior:'smooth'})"></div>
+  <div class="dot" data-section="mediakit" onclick="document.getElementById('mediakit').scrollIntoView({behavior:'smooth'})"></div>
+  <div class="dot" data-section="resources" onclick="document.getElementById('resources').scrollIntoView({behavior:'smooth'})"></div>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-bg-fallback"></div>
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-grain"></div>
+  <div class="hero-overlay"></div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">The Beginner Influencer's Playbook</div>
+    <h1>Turn your<br>voice into<br><em>a brand deal.</em></h1>
+    <p class="hero-sub">A practical guide for creators ready to connect with brands, land their first sponsorship, and build something real — starting with zero experience.</p>
+    <div class="hero-actions">
+      <a href="#strategies" class="btn-primary">Start the Playbook →</a>
+      <a href="#resources" class="btn-ghost">Jump to Resources ↓</a>
+    </div>
+  </div>
+
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="hero-stat-num" data-count="1000">0</div>
+      <div class="hero-stat-label">Followers to start</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num" data-count="50" data-suffix="%">0</div>
+      <div class="hero-stat-label">Max commission rate</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num" data-count="8">0</div>
+      <div class="hero-stat-label">Proven strategies</div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track" id="marquee">
+    <div class="marquee-item">Build Your Foundation</div>
+    <div class="marquee-item">Start Small & Local</div>
+    <div class="marquee-item">Create Gift Posts</div>
+    <div class="marquee-item">Affiliate Programs</div>
+    <div class="marquee-item">Email Pitches</div>
+    <div class="marquee-item">Media Kit</div>
+    <div class="marquee-item">Engage Brands First</div>
+    <div class="marquee-item">Influencer Marketplaces</div>
+    <div class="marquee-item">Collabstr</div>
+    <div class="marquee-item">Amazon Associates</div>
+    <div class="marquee-item">LTK</div>
+    <div class="marquee-item">AspireIQ</div>
+    <div class="marquee-item">ShareASale</div>
+    <div class="marquee-item">Impact</div>
+    <div class="marquee-item">Build Your Foundation</div>
+    <div class="marquee-item">Start Small & Local</div>
+    <div class="marquee-item">Create Gift Posts</div>
+    <div class="marquee-item">Affiliate Programs</div>
+    <div class="marquee-item">Email Pitches</div>
+    <div class="marquee-item">Media Kit</div>
+    <div class="marquee-item">Engage Brands First</div>
+    <div class="marquee-item">Influencer Marketplaces</div>
+    <div class="marquee-item">Collabstr</div>
+    <div class="marquee-item">Amazon Associates</div>
+    <div class="marquee-item">LTK</div>
+    <div class="marquee-item">AspireIQ</div>
+    <div class="marquee-item">ShareASale</div>
+    <div class="marquee-item">Impact</div>
+  </div>
+</div>
+
+<!-- STRATEGIES -->
+<section id="strategies">
+  <div class="section-tag">Section 01</div>
+  <h2 class="section-title">8 Strategies to<br><em>Connect with Brands</em></h2>
+  <p class="section-sub">Every strategy below is actionable from day one. Start where you are — not where you wish you were.</p>
+
+  <div class="strategies-grid">
+    <div class="s-card">
+      <div class="s-num">01</div>
+      <div class="s-icon">🏗️</div>
+      <div class="s-title">Build Your Foundation First</div>
+      <p class="s-text">Before reaching out, your profile needs to look credible. Consistent posting, a clear niche, professional bio, and genuine engagement. Brands check everything — engagement rate matters more than follower count.</p>
+      <div class="s-tip">Even 1,000 highly engaged followers can land deals with the right brand.</div>
+    </div>
+    <div class="s-card">
+      <div class="s-num">02</div>
+      <div class="s-icon">📍</div>
+      <div class="s-title">Start Small & Local</div>
+      <p class="s-text">Don't aim for Nike on day one. Target small businesses, local brands, and startups in your niche. They have smaller budgets but are far more open to working with micro-influencers. Early partnerships build your portfolio.</p>
+      <div class="s-tip">Local restaurants, boutiques, and service businesses are goldmines for beginners.</div>
+    </div>
+    <div class="s-card">
+      <div class="s-num">03</div>
+      <div class="s-icon">🎁</div>
+      <div class="s-title">Create an Unprompted Gift Post</div>
+      <p class="s-text">Buy or use a product you genuinely love, post high-quality content about it, tag the brand, and don't ask for anything. This gets you on their radar organically and shows what you can do better than any cold pitch.</p>
+      <div class="s-tip">Brands notice authentic content far more than promotional emails.</div>
+    </div>
+    <div class="s-card">
+      <div class="s-num">04</div>
+      <div class="s-icon">🔗</div>
+      <div class="s-title">Use Affiliate Programs as a Backdoor</div>
+      <p class="s-text">Platforms like Amazon Associates, LTK, and ShareASale let you start earning and building relationships without pitching anyone. Once you're generating real sales, brands often start reaching out to you.</p>
+      <div class="s-tip">Affiliate earnings are proof of performance — your best pitch tool.</div>
+    </div>
+    <div class="s-card">
+      <div class="s-num">05</div>
+      <div class="s-icon">📧</div>
+      <div class="s-title">Pitch via Email, Not DM</div>
+      <p class="s-text">Find the brand's PR or marketing contact through LinkedIn or their website press page. A professional email with a short media kit signals you're serious. DMs get ignored — emails get forwarded to decision-makers.</p>
+      <div class="s-tip">Subject line formula: "Collab idea — [Your Niche] + [Brand Name]"</div>
+    </div>
+    <div class="s-card">
+      <div class="s-num">06</div>
+      <div class="s-icon">📋</div>
+      <div class="s-title">Build a Simple Media Kit</div>
+      <p class="s-text">Even as a beginner, a clean one-page PDF with your photo, niche, platforms, engagement stats, and past work goes a long way. It signals professionalism. Use Canva — free media kit templates available instantly.</p>
+      <div class="s-tip">Include your audience demographics: age, location, interests.</div>
+    </div>
+    <div class="s-card">
+      <div class="s-num">07</div>
+      <div class="s-icon">💬</div>
+      <div class="s-title">Engage Brands Before Pitching</div>
+      <p class="s-text">Comment thoughtfully on their posts, share their content, respond to their stories for weeks before pitching. When you finally reach out, you're a familiar face who already supports them — not a stranger asking for money.</p>
+      <div class="s-tip">Genuine comments beat any cold outreach strategy.</div>
+    </div>
+    <div class="s-card">
+      <div class="s-num">08</div>
+      <div class="s-icon">🏪</div>
+      <div class="s-title">Use Influencer Marketplaces</div>
+      <p class="s-text">Platforms like AspireIQ, Collabstr, and Creator.co flip the script — brands come to you. Perfect for beginners since you're in a searchable directory and brands actively browse for creators in their niche.</p>
+      <div class="s-tip">Complete your profile 100% — brands filter by niche, platform, and location.</div>
+    </div>
+  </div>
+</section>
+
+<!-- AFFILIATE -->
+<section id="affiliate">
+  <div id="affiliateImg" class="affiliate-hero-fallback">
+    <!-- Image loads here via JS -->
+  </div>
+
+  <div class="section-tag">Section 02</div>
+  <h2 class="section-title">Understanding<br><em>Affiliate Programs</em></h2>
+  <p class="section-sub">The most beginner-friendly way to start making money before brands come knocking — no follower minimum required.</p>
+
+  <div class="flow-steps">
+    <div class="flow-step">
+      <div class="flow-num">1</div>
+      <div class="flow-title">Join a Program</div>
+      <div class="flow-text">Sign up free. Most programs have no follower minimums — anyone can start.</div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-num">2</div>
+      <div class="flow-title">Get Your Link</div>
+      <div class="flow-text">You receive a unique tracking URL tied directly to your account.</div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-num">3</div>
+      <div class="flow-title">Share the Link</div>
+      <div class="flow-text">Post in your bio, captions, videos, stories, or blog content.</div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-num">4</div>
+      <div class="flow-title">Someone Buys</div>
+      <div class="flow-text">A follower clicks your link and completes a purchase through it.</div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-num">5</div>
+      <div class="flow-title">You Earn</div>
+      <div class="flow-text">A percentage of the sale deposits into your account automatically.</div>
+    </div>
+  </div>
+
+  <div class="section-tag">Commission Rates by Category</div>
+  <h3 class="section-title" style="font-size:1.8rem; margin-bottom:0.5rem;">What you can <em>actually earn</em></h3>
+  <p class="section-sub" style="margin-bottom:0;">Rates vary widely. Digital products and software pay the most.</p>
+
+  <div class="commission-table">
+    <div class="comm-cell">
+      <div class="comm-cat">Physical Products</div>
+      <div class="comm-rate">1–10%</div>
+      <div class="comm-example">Amazon, Target, Walmart</div>
+    </div>
+    <div class="comm-cell">
+      <div class="comm-cat">Fashion & Beauty</div>
+      <div class="comm-rate">5–20%</div>
+      <div class="comm-example">LTK, RewardStyle</div>
+    </div>
+    <div class="comm-cell">
+      <div class="comm-cat">Software & Apps</div>
+      <div class="comm-rate">20–50%</div>
+      <div class="comm-example">SaaS tools, subscriptions</div>
+    </div>
+    <div class="comm-cell">
+      <div class="comm-cat">Online Courses</div>
+      <div class="comm-rate">30–50%+</div>
+      <div class="comm-example">Teachable, Kajabi</div>
+    </div>
+    <div class="comm-cell">
+      <div class="comm-cat">Finance & Credit</div>
+      <div class="comm-rate">$50–$200</div>
+      <div class="comm-example">Flat fee per signup</div>
+    </div>
+  </div>
+</section>
+
+<!-- PLATFORMS -->
+<section id="platforms">
+  <div class="section-tag">Section 03</div>
+  <h2 class="section-title">Platforms &<br><em>Marketplaces</em></h2>
+  <p class="section-sub">Every card links directly to the real platform. Pick what fits your niche and sign up today.</p>
+
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('aff', this)">Affiliate Networks</button>
+    <button class="tab-btn" onclick="switchTab('mkt', this)">Influencer Marketplaces</button>
+    <button class="tab-btn" onclick="switchTab('tools', this)">Creator Tools</button>
+  </div>
+
+  <div id="tab-aff" class="tab-panel active">
+    <a href="https://affiliate-program.amazon.com" target="_blank" class="p-card">
+      <div class="p-badge">Best for Beginners</div>
+      <div class="p-name">Amazon Associates</div>
+      <div class="p-desc">The easiest affiliate program to join. Covers nearly every product category. 1–10% commissions with instant approval for most creators.</div>
+      <div class="p-link">affiliate-program.amazon.com</div>
+    </a>
+    <a href="https://www.ltk.com/become-a-creator" target="_blank" class="p-card">
+      <div class="p-badge">Fashion & Lifestyle</div>
+      <div class="p-name">LTK (LikeToKnow.it)</div>
+      <div class="p-desc">The go-to platform for fashion, beauty, and home influencers. App-based shopping feed your followers can browse directly.</div>
+      <div class="p-link">ltk.com/become-a-creator</div>
+    </a>
+    <a href="https://www.shareasale.com/info/affiliates.cfm" target="_blank" class="p-card">
+      <div class="p-badge">Large Network</div>
+      <div class="p-name">ShareASale</div>
+      <div class="p-desc">Thousands of brands across every niche. Great for finding programs tied to products you already genuinely recommend.</div>
+      <div class="p-link">shareasale.com</div>
+    </a>
+    <a href="https://impact.com/partners/affiliates/" target="_blank" class="p-card">
+      <div class="p-badge">Major Brands</div>
+      <div class="p-name">Impact</div>
+      <div class="p-desc">Used by Adidas, Airbnb, L'Oréal, and other household names. More professional setup — ideal as your following grows.</div>
+      <div class="p-link">impact.com/partners/affiliates</div>
+    </a>
+    <a href="https://rakuten.com/affiliates/overview/" target="_blank" class="p-card">
+      <div class="p-badge">Established Network</div>
+      <div class="p-name">Rakuten Advertising</div>
+      <div class="p-desc">One of the oldest and most trusted affiliate networks. Wide variety of brand partnerships across retail, travel, and lifestyle.</div>
+      <div class="p-link">rakuten.com/affiliates</div>
+    </a>
+    <a href="https://www.clickbank.com/affiliates/" target="_blank" class="p-card">
+      <div class="p-badge">Digital Products</div>
+      <div class="p-name">ClickBank</div>
+      <div class="p-desc">Specializes in digital products and online courses. Some of the highest commission rates available — up to 75% per sale.</div>
+      <div class="p-link">clickbank.com/affiliates</div>
+    </a>
+  </div>
+
+  <div id="tab-mkt" class="tab-panel">
+    <a href="https://www.aspire.io" target="_blank" class="p-card">
+      <div class="p-badge">Full-Service Platform</div>
+      <div class="p-name">AspireIQ</div>
+      <div class="p-desc">One of the top influencer marketing platforms. Brands actively search here for creators of all sizes — a great place to be found.</div>
+      <div class="p-link">aspire.io</div>
+    </a>
+    <a href="https://collabstr.com" target="_blank" class="p-card">
+      <div class="p-badge">Great for Beginners</div>
+      <div class="p-name">Collabstr</div>
+      <div class="p-desc">Set your own rates, list your services, and have brands come to you. Simple interface perfect for those just starting out.</div>
+      <div class="p-link">collabstr.com</div>
+    </a>
+    <a href="https://creator.co" target="_blank" class="p-card">
+      <div class="p-badge">Micro-Influencer Friendly</div>
+      <div class="p-name">Creator.co</div>
+      <div class="p-desc">Designed specifically for micro and nano influencers. Low follower minimums and a browsable marketplace of brand deals.</div>
+      <div class="p-link">creator.co</div>
+    </a>
+    <a href="https://grin.co" target="_blank" class="p-card">
+      <div class="p-badge">Enterprise Brands</div>
+      <div class="p-name">Grin</div>
+      <div class="p-desc">Used by major DTC brands to find creators. Getting accepted here signals to the industry that you're a serious professional.</div>
+      <div class="p-link">grin.co</div>
+    </a>
+    <a href="https://influencity.com" target="_blank" class="p-card">
+      <div class="p-badge">Analytics-Driven</div>
+      <div class="p-name">Influencity</div>
+      <div class="p-desc">Data-driven platform that connects brands with creators. Provides deep audience analytics which brands particularly appreciate.</div>
+      <div class="p-link">influencity.com</div>
+    </a>
+    <a href="https://www.brandsmeetcreators.com" target="_blank" class="p-card">
+      <div class="p-badge">Direct Partnerships</div>
+      <div class="p-name">Brands Meet Creators</div>
+      <div class="p-desc">A direct marketplace focused on authentic, long-term brand partnerships rather than one-off sponsored posts.</div>
+      <div class="p-link">brandsmeetcreators.com</div>
+    </a>
+  </div>
+
+  <div id="tab-tools" class="tab-panel">
+    <a href="https://linktr.ee" target="_blank" class="p-card">
+      <div class="p-badge">Essential — Start Here</div>
+      <div class="p-name">Linktree</div>
+      <div class="p-desc">A single bio link page that holds all your affiliate links, social profiles, and content. Free plan available. Absolute must-have for any creator.</div>
+      <div class="p-link">linktr.ee</div>
+    </a>
+    <a href="https://www.canva.com" target="_blank" class="p-card">
+      <div class="p-badge">Free Media Kit Builder</div>
+      <div class="p-name">Canva</div>
+      <div class="p-desc">Build a professional media kit, pitch deck, and social content for free. Search "media kit" in Canva templates to start in under 5 minutes.</div>
+      <div class="p-link">canva.com</div>
+    </a>
+    <a href="https://www.linkedin.com" target="_blank" class="p-card">
+      <div class="p-badge">Find Brand Contacts</div>
+      <div class="p-name">LinkedIn</div>
+      <div class="p-desc">Find the PR manager or brand partnerships contact at any company. Search "[Brand Name] influencer marketing" to find the right person.</div>
+      <div class="p-link">linkedin.com</div>
+    </a>
+    <a href="https://later.com/blog/influencer-rate-calculator/" target="_blank" class="p-card">
+      <div class="p-badge">Know Your Worth</div>
+      <div class="p-name">Later's Rate Calculator</div>
+      <div class="p-desc">Free tool to estimate exactly what you should charge for sponsored posts based on follower count, engagement rate, and your niche.</div>
+      <div class="p-link">later.com/blog/influencer-rate-calculator</div>
+    </a>
+  </div>
+</section>
+
+<!-- PITCH -->
+<section id="pitch">
+  <div class="section-tag">Section 04</div>
+  <h2 class="section-title">The Perfect<br><em>Brand Pitch</em></h2>
+  <p class="section-sub">Be specific. Be brief. Make it easy for them to say yes.</p>
+
+  <div class="pitch-layout">
+    <div class="pitch-steps">
+      <div class="pitch-step">
+        <div class="pitch-tag">P1</div>
+        <div>
+          <div class="pitch-step-title">Who You Are</div>
+          <div class="pitch-step-text">One sentence: your name, niche, and platform. Don't oversell — just state what you do and who your audience is.</div>
+        </div>
+      </div>
+      <div class="pitch-step">
+        <div class="pitch-tag">P2</div>
+        <div>
+          <div class="pitch-step-title">Why You Fit Their Brand</div>
+          <div class="pitch-step-text">Show you've done your homework. Mention a specific product, campaign, or value of theirs that aligns with your content. Make it personal, not generic.</div>
+        </div>
+      </div>
+      <div class="pitch-step">
+        <div class="pitch-tag">P3</div>
+        <div>
+          <div class="pitch-step-title">A Specific Collaboration Idea</div>
+          <div class="pitch-step-text">Propose one concrete thing. "A 60-second reel" beats "social content." Name the format, the platform, and ideally the timing or theme.</div>
+        </div>
+      </div>
+      <div class="pitch-step">
+        <div class="pitch-tag">P4</div>
+        <div>
+          <div class="pitch-step-title">Attach Your Media Kit</div>
+          <div class="pitch-step-text">A one-page PDF with your stats, audience demographics, niche, platforms, and sample content. Keep it clean and visual — let it speak for you.</div>
+        </div>
+      </div>
+      <div class="pitch-step">
+        <div class="pitch-tag">P5</div>
+        <div>
+          <div class="pitch-step-title">A Soft Call-to-Action</div>
+          <div class="pitch-step-text">Offer a 15-minute call or simply say you're happy to answer questions. Keep the door open. Don't pressure — give them room to respond naturally.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pitch-email">
+      <div class="pitch-email-label">Sample Pitch Email</div>
+      <div class="pitch-email-body">
+        <strong>Subject:</strong> Collab Idea — Fitness Content + [Brand Name]<br><br>
+
+        Hi [Name],<br><br>
+
+        <strong>I'm [Your Name]</strong>, a fitness creator on Instagram and TikTok with an audience of 4,200 active followers focused on at-home training and nutrition.<br><br>
+
+        <span class="gold">I've been using [Brand]'s resistance bands for three months and genuinely recommend them regularly.</span> Your recent campaign around home gym setups aligns perfectly with the content I create.<br><br>
+
+        <strong>I'd love to propose a 60-second reel</strong> featuring a full at-home workout using your bands — published in early August to coincide with back-to-school season when my audience is actively refreshing their fitness routines.<br><br>
+
+        I've attached my media kit with full stats and audience demographics. Happy to jump on a quick 15-minute call if helpful — no pressure either way.<br><br>
+
+        Thanks for your time,<br>
+        <strong>[Your Name]</strong>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MEDIA KIT -->
+<section id="mediakit">
+  <div class="section-tag">Section 05</div>
+  <h2 class="section-title">Your Media Kit<br><em>Checklist</em></h2>
+  <p class="section-sub">Build this before you pitch anyone. Use <a href="https://canva.com" target="_blank" style="color:var(--gold)">Canva.com</a> — free media kit templates are ready instantly.</p>
+
+  <div class="kit-grid">
+    <div class="kit-item">
+      <div class="kit-check">✓</div>
+      <div class="kit-title">Profile Photo & Bio</div>
+      <div class="kit-desc">Professional headshot and 2–3 sentences describing your niche, content style, and what makes your audience unique.</div>
+    </div>
+    <div class="kit-item">
+      <div class="kit-check">✓</div>
+      <div class="kit-title">Follower Count by Platform</div>
+      <div class="kit-desc">Instagram, TikTok, YouTube, Pinterest — list each separately with current follower numbers and growth trends.</div>
+    </div>
+    <div class="kit-item">
+      <div class="kit-check">✓</div>
+      <div class="kit-title">Engagement Rate</div>
+      <div class="kit-desc">(Avg likes + comments) ÷ followers × 100. Highlight this if it's above 3% — it's often more valuable than raw follower count.</div>
+    </div>
+    <div class="kit-item">
+      <div class="kit-check">✓</div>
+      <div class="kit-title">Audience Demographics</div>
+      <div class="kit-desc">Age range, gender split, top locations. Find this in your platform's native analytics dashboard — brands need this to justify the partnership.</div>
+    </div>
+    <div class="kit-item">
+      <div class="kit-check">✓</div>
+      <div class="kit-title">Niche & Content Style</div>
+      <div class="kit-desc">Be specific: "sustainable fashion for women 25–35" beats "lifestyle content." The tighter your niche, the more valuable you are to the right brand.</div>
+    </div>
+    <div class="kit-item">
+      <div class="kit-check">✓</div>
+      <div class="kit-title">Sample Content</div>
+      <div class="kit-desc">3–5 of your best posts or screenshots. No brand work yet? Use your own personal content — quality speaks for itself.</div>
+    </div>
+    <div class="kit-item">
+      <div class="kit-check">✓</div>
+      <div class="kit-title">Contact Information</div>
+      <div class="kit-desc">A professional email address. Consider setting up a custom domain email — yourname@yourdomain.com signals serious intent.</div>
+    </div>
+    <div class="kit-item">
+      <div class="kit-check">✓</div>
+      <div class="kit-title">Services & Rates (Optional)</div>
+      <div class="kit-desc">What you offer: sponsored posts, reels, stories, UGC, affiliate. Rates are optional for first outreach — negotiate after they show interest.</div>
+    </div>
+  </div>
+</section>
+
+<!-- MINDSET -->
+<section id="mindset">
+  <div class="section-tag">Remember This</div>
+  <div class="mindset-quote">"You're not asking for a favor. You're offering a value exchange. Present yourself that way from day one."</div>
+  <p class="mindset-sub">The most successful influencers approach brands as equals — creative partners with something real to offer. Your audience's trust is valuable. Own it.</p>
+</section>
+
+<!-- RESOURCES -->
+<section id="resources">
+  <div class="section-tag">Section 06</div>
+  <h2 class="section-title">All Links &<br><em>Resources</em></h2>
+  <p class="section-sub">Every platform mentioned in one place. Click any card to go directly to the site.</p>
+
+  <div class="resources-grid">
+    <a href="https://affiliate-program.amazon.com" target="_blank" class="r-card">
+      <div class="r-cat">Affiliate Network</div>
+      <div class="r-name">Amazon Associates</div>
+      <div class="r-note">Easiest starting point. 1–10% commissions on millions of products across every category.</div>
+      <div class="r-url">affiliate-program.amazon.com</div>
+    </a>
+    <a href="https://www.ltk.com/become-a-creator" target="_blank" class="r-card">
+      <div class="r-cat">Affiliate / Marketplace</div>
+      <div class="r-name">LTK (LikeToKnow.it)</div>
+      <div class="r-note">Best for fashion, beauty, and home influencers. App-based shopping feed your audience loves.</div>
+      <div class="r-url">ltk.com/become-a-creator</div>
+    </a>
+    <a href="https://www.shareasale.com/info/affiliates.cfm" target="_blank" class="r-card">
+      <div class="r-cat">Affiliate Network</div>
+      <div class="r-name">ShareASale</div>
+      <div class="r-note">Thousands of brands across every niche. Great for finding programs tied to products you already love.</div>
+      <div class="r-url">shareasale.com</div>
+    </a>
+    <a href="https://impact.com/partners/affiliates/" target="_blank" class="r-card">
+      <div class="r-cat">Affiliate Network</div>
+      <div class="r-name">Impact</div>
+      <div class="r-note">Adidas, Airbnb, and L'Oréal live here. More professional setup for growing creators.</div>
+      <div class="r-url">impact.com/partners/affiliates</div>
+    </a>
+    <a href="https://rakuten.com/affiliates/overview/" target="_blank" class="r-card">
+      <div class="r-cat">Affiliate Network</div>
+      <div class="r-name">Rakuten Advertising</div>
+      <div class="r-note">One of the oldest and most trusted affiliate networks with broad brand variety.</div>
+      <div class="r-url">rakuten.com/affiliates</div>
+    </a>
+    <a href="https://www.clickbank.com/affiliates/" target="_blank" class="r-card">
+      <div class="r-cat">Affiliate Network</div>
+      <div class="r-name">ClickBank</div>
+      <div class="r-note">Digital products and courses. Up to 75% commissions — highest in the industry.</div>
+      <div class="r-url">clickbank.com/affiliates</div>
+    </a>
+    <a href="https://www.aspire.io" target="_blank" class="r-card">
+      <div class="r-cat">Influencer Marketplace</div>
+      <div class="r-name">AspireIQ</div>
+      <div class="r-note">Top-tier influencer platform. Brands actively search for creators of all follower sizes.</div>
+      <div class="r-url">aspire.io</div>
+    </a>
+    <a href="https://collabstr.com" target="_blank" class="r-card">
+      <div class="r-cat">Influencer Marketplace</div>
+      <div class="r-name">Collabstr</div>
+      <div class="r-note">Set your own rates. Brands come to you. Easiest marketplace for beginners to get started.</div>
+      <div class="r-url">collabstr.com</div>
+    </a>
+    <a href="https://creator.co" target="_blank" class="r-card">
+      <div class="r-cat">Influencer Marketplace</div>
+      <div class="r-name">Creator.co</div>
+      <div class="r-note">Built for micro and nano influencers. Low follower requirements and browsable brand deals.</div>
+      <div class="r-url">creator.co</div>
+    </a>
+    <a href="https://grin.co" target="_blank" class="r-card">
+      <div class="r-cat">Influencer Marketplace</div>
+      <div class="r-name">Grin</div>
+      <div class="r-note">Major DTC brands use Grin. Getting listed signals professionalism to the industry.</div>
+      <div class="r-url">grin.co</div>
+    </a>
+    <a href="https://linktr.ee" target="_blank" class="r-card">
+      <div class="r-cat">Creator Tool</div>
+      <div class="r-name">Linktree</div>
+      <div class="r-note">One bio link to hold all your content, affiliate links, and social profiles. Free plan available.</div>
+      <div class="r-url">linktr.ee</div>
+    </a>
+    <a href="https://www.canva.com" target="_blank" class="r-card">
+      <div class="r-cat">Creator Tool</div>
+      <div class="r-name">Canva</div>
+      <div class="r-note">Free media kit builder. Search "media kit" in templates to launch in under 5 minutes.</div>
+      <div class="r-url">canva.com</div>
+    </a>
+    <a href="https://www.linkedin.com" target="_blank" class="r-card">
+      <div class="r-cat">Creator Tool</div>
+      <div class="r-name">LinkedIn</div>
+      <div class="r-note">Find brand partnership and PR contacts at any company. Your best path to a real email address.</div>
+      <div class="r-url">linkedin.com</div>
+    </a>
+    <a href="https://later.com/blog/influencer-rate-calculator/" target="_blank" class="r-card">
+      <div class="r-cat">Creator Tool</div>
+      <div class="r-name">Later Rate Calculator</div>
+      <div class="r-note">Free tool to know exactly what to charge for sponsored posts based on your stats.</div>
+      <div class="r-url">later.com/blog/influencer-rate-calculator</div>
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-brand">Brand<span>Connect</span></div>
+    <p class="footer-copy">A no-fluff guide to landing your first brand deal. Built for creators who are serious about turning their passion into a career — starting now, starting small, starting real.</p>
+    <p class="footer-note">All links open in a new tab. No affiliate relationships with any listed platforms.</p>
+  </div>
+  <div>
+    <div style="font-family:'DM Mono',monospace; font-size:0.65rem; letter-spacing:0.16em; text-transform:uppercase; color:var(--warm); margin-bottom:1.2rem;">Quick Links</div>
+    <div class="footer-links">
+      <a href="https://affiliate-program.amazon.com" target="_blank" class="footer-link">Amazon Associates</a>
+      <a href="https://www.ltk.com/become-a-creator" target="_blank" class="footer-link">LTK</a>
+      <a href="https://collabstr.com" target="_blank" class="footer-link">Collabstr</a>
+      <a href="https://creator.co" target="_blank" class="footer-link">Creator.co</a>
+      <a href="https://www.aspire.io" target="_blank" class="footer-link">AspireIQ</a>
+      <a href="https://www.shareasale.com/info/affiliates.cfm" target="_blank" class="footer-link">ShareASale</a>
+      <a href="https://linktr.ee" target="_blank" class="footer-link">Linktree</a>
+      <a href="https://www.canva.com" target="_blank" class="footer-link">Canva</a>
+      <a href="https://impact.com/partners/affiliates/" target="_blank" class="footer-link">Impact</a>
+      <a href="https://later.com/blog/influencer-rate-calculator/" target="_blank" class="footer-link">Rate Calculator</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ── CURSOR
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+let mx = 0, my = 0, rx = 0, ry = 0;
+document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+function animCursor() {
+  cursor.style.left = mx + 'px';
+  cursor.style.top = my + 'px';
+  rx += (mx - rx) * 0.12;
+  ry += (my - ry) * 0.12;
+  ring.style.left = rx + 'px';
+  ring.style.top = ry + 'px';
+  requestAnimationFrame(animCursor);
+}
+animCursor();
+document.querySelectorAll('a, button, .s-card, .p-card, .r-card').forEach(el => {
+  el.addEventListener('mouseenter', () => { cursor.style.transform='translate(-50%,-50%) scale(2)'; ring.style.transform='translate(-50%,-50%) scale(1.5)'; });
+  el.addEventListener('mouseleave', () => { cursor.style.transform='translate(-50%,-50%) scale(1)'; ring.style.transform='translate(-50%,-50%) scale(1)'; });
+});
+
+// ── PROGRESS BAR
+const progressBar = document.getElementById('progress-bar');
+window.addEventListener('scroll', () => {
+  const pct = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+  progressBar.style.width = pct + '%';
+});
+
+// ── SECTION DOTS
+const sections = ['hero','strategies','affiliate','platforms','pitch','mediakit','resources'];
+const dots = document.querySelectorAll('.dot');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const idx = sections.indexOf(entry.target.id);
+      if (idx >= 0) {
+        dots.forEach(d => d.classList.remove('active'));
+        if (dots[idx]) dots[idx].classList.add('active');
+      }
+    }
+  });
+}, { threshold: 0.4 });
+sections.forEach(id => { const el = document.getElementById(id); if(el) observer.observe(el); });
+
+// ── COUNTER ANIMATION
+function animateCounter(el) {
+  const target = parseInt(el.dataset.count);
+  const suffix = el.dataset.suffix || '';
+  const prefix = el.dataset.prefix || '';
+  let current = 0;
+  const duration = 1800;
+  const steps = 60;
+  const increment = target / steps;
+  const timer = setInterval(() => {
+    current += increment;
+    if (current >= target) {
+      current = target;
+      clearInterval(timer);
+    }
+    if (target >= 1000) {
+      el.textContent = prefix + current.toLocaleString('en-US', {maximumFractionDigits:0}) + suffix;
+    } else {
+      el.textContent = prefix + Math.round(current) + suffix;
+    }
+  }, duration / steps);
+}
+
+const counterObs = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting && !entry.target.dataset.animated) {
+      entry.target.dataset.animated = '1';
+      animateCounter(entry.target);
+    }
+  });
+}, { threshold: 0.5 });
+document.querySelectorAll('[data-count]').forEach(el => counterObs.observe(el));
+
+// ── CARD FADE IN
+const cardObs = new IntersectionObserver(entries => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => entry.target.classList.add('visible'), i * 80);
+    }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.s-card').forEach(el => cardObs.observe(el));
+
+// ── TABS
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ── INJECT HERO IMAGE (called after image URL is known)
+function setHeroImage(url) {
+  if (!url) return;
+  const bg = document.getElementById('heroBg');
+  if (bg) bg.style.backgroundImage = "url('" + url + "')";
+}
+
+// ── INJECT AFFILIATE IMAGE
+function setAffiliateImage(url) {
+  if (!url) return;
+  const container = document.getElementById('affiliateImg');
+  if (!container) return;
+  container.innerHTML = '';
+  container.className = '';
+  const img = document.createElement('img');
+  img.src = url;
+  img.className = 'affiliate-hero-img';
+  img.alt = 'Brand partnerships editorial photo';
+  img.onerror = () => { container.style.display = 'none'; };
+  container.appendChild(img);
+}
+
+// ── PLACEHOLDER — these get replaced when images are ready
+setHeroImage('https://d8j0ntlcm91z4.cloudfront.net/user_3EbyD3AwZroIC4tHbsVPgyggSkU/hf_20260604_042243_826bcd69-9b0b-4668-be88-48c5ee9b2da1.png');
+setAffiliateImage('https://d8j0ntlcm91z4.cloudfront.net/user_3EbyD3AwZroIC4tHbsVPgyggSkU/hf_20260604_042248_07bee2c1-49ee-4e75-ad49-e76f996b6af4.png');
+</script>
+</body>
+</html>
