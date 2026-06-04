@@ -1030,6 +1030,78 @@ footer {
 .footer-link:hover { color: var(--gold); }
 .footer-link::before { content: '→'; font-size: 0.7rem; color: var(--gold); opacity: 0.6; }
 
+/* ── EXPLAINER BOXES ── */
+.explainer {
+  background: rgba(201,164,90,0.07);
+  border: 1px solid rgba(201,164,90,0.25);
+  border-left: 3px solid var(--gold);
+  padding: 1.4rem 1.6rem;
+  margin-top: 1rem;
+  border-radius: 0 2px 2px 0;
+}
+.explainer-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.45rem;
+}
+.explainer-text {
+  font-size: 0.83rem;
+  font-weight: 300;
+  color: rgba(248,244,238,0.65);
+  line-height: 1.75;
+}
+.explainer-text strong { color: var(--cream); font-weight: 500; }
+
+/* ── TERM DEFINITIONS ── */
+.terms-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  margin: 3rem 0 5rem;
+}
+.term-card {
+  background: #100e0b;
+  padding: 1.8rem 1.6rem;
+  transition: background 0.2s;
+}
+.term-card:hover { background: #161310; }
+.term-word {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--gold);
+  margin-bottom: 0.5rem;
+}
+.term-def {
+  font-size: 0.83rem;
+  font-weight: 300;
+  color: rgba(248,244,238,0.6);
+  line-height: 1.7;
+}
+.term-def strong { color: var(--cream); font-weight: 500; }
+
+/* ── SECTION INTRO CALLOUT ── */
+.section-callout {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  padding: 2rem 2.5rem;
+  margin-bottom: 3.5rem;
+  max-width: 780px;
+}
+.section-callout p {
+  font-size: 0.92rem;
+  font-weight: 300;
+  color: rgba(248,244,238,0.65);
+  line-height: 1.85;
+}
+.section-callout p + p { margin-top: 0.8rem; }
+.section-callout strong { color: var(--cream); font-weight: 500; }
+
 /* ── ANIMATIONS ── */
 @keyframes fadeUp {
   from { opacity:0; transform:translateY(20px); }
@@ -1105,7 +1177,7 @@ footer {
   <div class="hero-content">
     <div class="hero-eyebrow">The Beginner Influencer's Playbook</div>
     <h1>Turn your<br>voice into<br><em>a brand deal.</em></h1>
-    <p class="hero-sub">A practical guide for creators ready to connect with brands, land their first sponsorship, and build something real — starting with zero experience.</p>
+    <p class="hero-sub">New to the influencer world? This guide breaks everything down in plain English — no assumed knowledge, no jargon without explanation. Every strategy, term, and tool is explained so you can take real steps forward today.</p>
     <div class="hero-actions">
       <a href="#strategies" class="btn-primary">Start the Playbook →</a>
       <a href="#resources" class="btn-ghost">Jump to Resources ↓</a>
@@ -1168,61 +1240,105 @@ footer {
   <h2 class="section-title">8 Strategies to<br><em>Connect with Brands</em></h2>
   <p class="section-sub">Every strategy below is actionable from day one. Start where you are — not where you wish you were.</p>
 
+  <div class="section-callout">
+    <p><strong>New to this?</strong> A "brand deal" simply means a company pays you — in money, free products, or both — to feature or promote them to your audience. Companies do this because people trust recommendations from creators they follow far more than traditional ads. Even small accounts with the right audience can be very attractive to brands.</p>
+    <p>Below are 8 proven ways to start making those connections happen, explained step by step.</p>
+  </div>
+
   <div class="strategies-grid">
     <div class="s-card">
       <div class="s-num">01</div>
       <div class="s-icon">🏗️</div>
       <div class="s-title">Build Your Foundation First</div>
-      <p class="s-text">Before reaching out, your profile needs to look credible. Consistent posting, a clear niche, professional bio, and genuine engagement. Brands check everything — engagement rate matters more than follower count.</p>
+      <p class="s-text">Before reaching out to any brand, your social media profile needs to look like a professional is running it. That means posting consistently (at least 3–4 times a week), having a clear <strong>niche</strong> (a specific topic you focus on — like fitness, cooking, travel, or fashion), a professional bio that explains who you are and what you post, and real interaction with your followers.</p>
+      <div class="explainer">
+        <div class="explainer-label">📖 What is "Engagement Rate"?</div>
+        <div class="explainer-text">Your engagement rate is the percentage of your followers who actually interact with your posts through likes, comments, and shares. A creator with 1,000 followers and 100 interactions per post (10% engagement) is far more valuable to a brand than someone with 50,000 followers but only 100 interactions (0.2% engagement). <strong>Quality beats quantity every time.</strong></div>
+      </div>
       <div class="s-tip">Even 1,000 highly engaged followers can land deals with the right brand.</div>
     </div>
+
     <div class="s-card">
       <div class="s-num">02</div>
       <div class="s-icon">📍</div>
       <div class="s-title">Start Small & Local</div>
-      <p class="s-text">Don't aim for Nike on day one. Target small businesses, local brands, and startups in your niche. They have smaller budgets but are far more open to working with micro-influencers. Early partnerships build your portfolio.</p>
+      <p class="s-text">Don't aim for Nike or Sephora on day one — those brands work with creators who have massive followings and a proven track record. Instead, start with small businesses and local brands in your area or niche. A local coffee shop, a small online clothing boutique, or a local gym are perfect starting points. They have smaller budgets but are much more willing to give new creators a chance.</p>
+      <div class="explainer">
+        <div class="explainer-label">📖 What is a "Micro-Influencer"?</div>
+        <div class="explainer-text">A micro-influencer is someone with roughly <strong>1,000 to 100,000 followers</strong>. Despite the smaller audience, studies show they often have higher engagement rates and more trust from their followers than mega-celebrities. Many brands specifically prefer working with micro-influencers because their recommendations feel more genuine and personal.</div>
+      </div>
       <div class="s-tip">Local restaurants, boutiques, and service businesses are goldmines for beginners.</div>
     </div>
+
     <div class="s-card">
       <div class="s-num">03</div>
       <div class="s-icon">🎁</div>
       <div class="s-title">Create an Unprompted Gift Post</div>
-      <p class="s-text">Buy or use a product you genuinely love, post high-quality content about it, tag the brand, and don't ask for anything. This gets you on their radar organically and shows what you can do better than any cold pitch.</p>
+      <p class="s-text">Here's a powerful trick: buy or use a product you genuinely love, create a high-quality post featuring it, tag the brand's official account in the post, and ask for absolutely nothing in return. This does two things — it gets you onto the brand's radar organically (they'll see the tag notification), and it gives them actual proof of what your content looks like featuring their product. It's a free audition.</p>
+      <div class="explainer">
+        <div class="explainer-label">📖 What does "tagging a brand" mean?</div>
+        <div class="explainer-text">When you write a post on Instagram, TikTok, or other platforms, you can <strong>mention another account</strong> by typing @ followed by their username (e.g. @Nike). This sends them a notification that you've mentioned them, and they can click through to see your post. It puts your content directly in front of the people who matter at that brand.</div>
+      </div>
       <div class="s-tip">Brands notice authentic content far more than promotional emails.</div>
     </div>
+
     <div class="s-card">
       <div class="s-num">04</div>
       <div class="s-icon">🔗</div>
       <div class="s-title">Use Affiliate Programs as a Backdoor</div>
-      <p class="s-text">Platforms like Amazon Associates, LTK, and ShareASale let you start earning and building relationships without pitching anyone. Once you're generating real sales, brands often start reaching out to you.</p>
+      <p class="s-text">Affiliate programs let you earn a commission (a percentage of the sale) every time someone buys something through your unique link — with no need to pitch anyone. You sign up, get a special link, share it in your posts or bio, and earn money when your followers use it. Once a brand sees you're already generating real sales for them, the conversation about a paid partnership becomes much easier. You go from "unknown creator" to "proven performer."</p>
+      <div class="explainer">
+        <div class="explainer-label">📖 What is a "Commission"?</div>
+        <div class="explainer-text">A commission is a percentage of a sale that you earn for sending a customer to a business. For example: if you share an Amazon link to a $50 backpack and someone buys it through your link, and Amazon pays a 5% commission, <strong>you earn $2.50</strong>. It doesn't cost the buyer anything extra — the store pays you out of their own profit margin.</div>
+      </div>
       <div class="s-tip">Affiliate earnings are proof of performance — your best pitch tool.</div>
     </div>
+
     <div class="s-card">
       <div class="s-num">05</div>
       <div class="s-icon">📧</div>
       <div class="s-title">Pitch via Email, Not DM</div>
-      <p class="s-text">Find the brand's PR or marketing contact through LinkedIn or their website press page. A professional email with a short media kit signals you're serious. DMs get ignored — emails get forwarded to decision-makers.</p>
+      <p class="s-text">When you're ready to reach out to a brand, skip the Instagram or TikTok DM (direct message). DMs get buried and rarely reach decision-makers. Instead, find the brand's PR (Public Relations) or marketing contact email — usually listed on their website under "Press" or "Contact" — and send a professional email. A well-written email with a media kit attached immediately separates you from the dozens of DMs they ignore every week.</p>
+      <div class="explainer">
+        <div class="explainer-label">📖 What is a "PR Contact" or "Cold Pitch"?</div>
+        <div class="explainer-text">A <strong>PR contact</strong> is the person at a company who manages their public image and creator/media relationships — they're the ones who approve brand deals. A <strong>cold pitch</strong> means reaching out to someone who has never heard of you before. It's "cold" because there's no existing relationship — yet. The goal is to warm them up with a compelling, personalized message. See Section 04 of this guide for a full email template.</div>
+      </div>
       <div class="s-tip">Subject line formula: "Collab idea — [Your Niche] + [Brand Name]"</div>
     </div>
+
     <div class="s-card">
       <div class="s-num">06</div>
       <div class="s-icon">📋</div>
       <div class="s-title">Build a Simple Media Kit</div>
-      <p class="s-text">Even as a beginner, a clean one-page PDF with your photo, niche, platforms, engagement stats, and past work goes a long way. It signals professionalism. Use Canva — free media kit templates available instantly.</p>
+      <p class="s-text">A media kit is your professional introduction document — think of it like a résumé, but for your social media presence. It's typically a clean one-page PDF that shows brands exactly who you are, how many people you reach, who your audience is, and what your content looks like. You don't need to be a designer to make one. The free tool Canva has ready-made media kit templates you can customize in minutes — just search "media kit" after signing up.</p>
+      <div class="explainer">
+        <div class="explainer-label">📖 What goes in a Media Kit?</div>
+        <div class="explainer-text">Your media kit should include: a headshot and short bio, your follower counts on each platform, your average engagement rate, your audience demographics (age, gender, location — found in your platform's analytics), 3–5 examples of your best posts, and your contact email. <strong>You can find audience analytics in the "Insights" section of Instagram or TikTok's creator tools.</strong></div>
+      </div>
       <div class="s-tip">Include your audience demographics: age, location, interests.</div>
     </div>
+
     <div class="s-card">
       <div class="s-num">07</div>
       <div class="s-icon">💬</div>
       <div class="s-title">Engage Brands Before Pitching</div>
-      <p class="s-text">Comment thoughtfully on their posts, share their content, respond to their stories for weeks before pitching. When you finally reach out, you're a familiar face who already supports them — not a stranger asking for money.</p>
+      <p class="s-text">Before you send a single pitch email, spend a few weeks actively engaging with the brand's own social media. Leave genuine, thoughtful comments on their posts (not just emojis — actual observations or compliments). Share their content to your stories. Respond when they post a question. This turns you from a complete stranger into a familiar face. When your pitch email arrives, they'll have seen your name before — and that makes a huge difference.</p>
+      <div class="explainer">
+        <div class="explainer-label">📖 Why does this work?</div>
+        <div class="explainer-text">The person who reviews your pitch is the same person managing the brand's social media. When they see your name in an email, they may recognize it from your genuine comments. <strong>Recognition = credibility.</strong> It also shows you actually care about their brand, not just their marketing budget.</div>
+      </div>
       <div class="s-tip">Genuine comments beat any cold outreach strategy.</div>
     </div>
+
     <div class="s-card">
       <div class="s-num">08</div>
       <div class="s-icon">🏪</div>
       <div class="s-title">Use Influencer Marketplaces</div>
-      <p class="s-text">Platforms like AspireIQ, Collabstr, and Creator.co flip the script — brands come to you. Perfect for beginners since you're in a searchable directory and brands actively browse for creators in their niche.</p>
+      <p class="s-text">Influencer marketplaces are websites where brands actively search for creators to work with. Instead of you hunting for brands, you create a profile and brands come to you. Think of it like a job board, but brands are the ones hiring. You list your platforms, niche, follower count, and rates — and brands can browse, filter by category, and reach out to you directly. These are especially powerful for beginners because brands on these platforms specifically want to find new creators.</p>
+      <div class="explainer">
+        <div class="explainer-label">📖 What's the difference between "gifted" and "paid" deals?</div>
+        <div class="explainer-text">A <strong>gifted deal</strong> means a brand sends you free products in exchange for a post — no money changes hands. A <strong>paid deal</strong> means the brand pays you a fee on top of (or instead of) free products. As a beginner, gifted deals are a normal starting point — they build your portfolio and your relationship with the brand, which can lead to paid deals later.</div>
+      </div>
       <div class="s-tip">Complete your profile 100% — brands filter by niche, platform, and location.</div>
     </div>
   </div>
@@ -1236,39 +1352,74 @@ footer {
 
   <div class="section-tag">Section 02</div>
   <h2 class="section-title">Understanding<br><em>Affiliate Programs</em></h2>
-  <p class="section-sub">The most beginner-friendly way to start making money before brands come knocking — no follower minimum required.</p>
+  <p class="section-sub">The most beginner-friendly way to start making money before brands come knocking — no follower minimum, no pitching required.</p>
+
+  <div class="section-callout">
+    <p><strong>In plain English:</strong> an affiliate program is an arrangement where a company gives you a special tracking link. When one of your followers clicks that link and buys something, you automatically earn a percentage of the sale. The buyer pays the same price they would anyway — the store just shares a slice of their profit with you for sending the customer their way.</p>
+    <p>You don't need approval from any brand. You don't need to negotiate anything. You just sign up, grab your link, share it where your audience can see it, and the earnings come in automatically — including from posts you made months ago.</p>
+  </div>
 
   <div class="flow-steps">
     <div class="flow-step">
       <div class="flow-num">1</div>
       <div class="flow-title">Join a Program</div>
-      <div class="flow-text">Sign up free. Most programs have no follower minimums — anyone can start.</div>
+      <div class="flow-text">Visit an affiliate network's website (like Amazon Associates), fill out a short application, and get approved. Most programs are free to join and many approve you instantly with no follower requirement.</div>
     </div>
     <div class="flow-step">
       <div class="flow-num">2</div>
-      <div class="flow-title">Get Your Link</div>
-      <div class="flow-text">You receive a unique tracking URL tied directly to your account.</div>
+      <div class="flow-title">Get Your Unique Link</div>
+      <div class="flow-text">Once approved, you search for any product and generate a special link that's tied to your account. It looks like a normal link but has a hidden tracking code that tells the store "this sale came from you."</div>
     </div>
     <div class="flow-step">
       <div class="flow-num">3</div>
-      <div class="flow-title">Share the Link</div>
-      <div class="flow-text">Post in your bio, captions, videos, stories, or blog content.</div>
+      <div class="flow-title">Share It with Your Audience</div>
+      <div class="flow-text">Post the link in your bio (using a tool like Linktree), include it in video descriptions, mention it in captions, or add it to your stories. Anywhere your audience can see and click it.</div>
     </div>
     <div class="flow-step">
       <div class="flow-num">4</div>
-      <div class="flow-title">Someone Buys</div>
-      <div class="flow-text">A follower clicks your link and completes a purchase through it.</div>
+      <div class="flow-title">A Follower Buys</div>
+      <div class="flow-text">Someone clicks your link and purchases the product — within a set window (usually 24–90 days, depending on the program). The sale gets automatically attributed to you.</div>
     </div>
     <div class="flow-step">
       <div class="flow-num">5</div>
-      <div class="flow-title">You Earn</div>
-      <div class="flow-text">A percentage of the sale deposits into your account automatically.</div>
+      <div class="flow-title">You Earn a Commission</div>
+      <div class="flow-text">Your earnings accumulate in your affiliate dashboard and get paid out monthly (usually via PayPal or direct deposit). Old content keeps earning — a video from 6 months ago can still generate income today.</div>
+    </div>
+  </div>
+
+  <div class="section-tag">Key Terms — Affiliate World</div>
+  <h3 class="section-title" style="font-size:1.8rem; margin-bottom:0.5rem;">Words you'll <em>need to know</em></h3>
+  <p class="section-sub" style="margin-bottom:0;">Before diving into the platforms, here's a quick glossary of affiliate terms you'll see everywhere.</p>
+
+  <div class="terms-row">
+    <div class="term-card">
+      <div class="term-word">Cookie Window</div>
+      <div class="term-def">The time period after someone clicks your link during which you still get credit for a purchase. Amazon's is <strong>24 hours</strong>. Other programs offer 30, 60, or 90 days — longer is better for you.</div>
+    </div>
+    <div class="term-card">
+      <div class="term-word">Conversion Rate</div>
+      <div class="term-def">The percentage of people who click your link and actually buy something. If 100 people click and 3 buy, your conversion rate is <strong>3%</strong>. Higher-priced items often convert lower, but earn more per sale.</div>
+    </div>
+    <div class="term-card">
+      <div class="term-word">UGC</div>
+      <div class="term-def">Stands for <strong>User-Generated Content</strong> — content (photos, videos, reviews) created by real people rather than a brand's own marketing team. Brands love UGC because it feels authentic. You can get paid to create UGC even without posting it to your own audience.</div>
+    </div>
+    <div class="term-card">
+      <div class="term-word">Payout Threshold</div>
+      <div class="term-def">The minimum amount you need to earn before a program will pay you out. Amazon's is <strong>$10</strong> for gift cards, $100 for direct deposit. Most programs pay monthly once you hit the threshold.</div>
+    </div>
+    <div class="term-card">
+      <div class="term-word">Deep Link</div>
+      <div class="term-def">An affiliate link that goes directly to a specific product page rather than just the store's homepage. Always use deep links — they convert much better because the buyer lands exactly where they need to be.</div>
+    </div>
+    <div class="term-card">
+      <div class="term-def"><strong>FTC Disclosure:</strong> In the US, the law requires you to disclose when you're using affiliate links or getting paid/gifted by a brand. Simply adding "#ad", "#sponsored", or "affiliate link" to your post or video is enough — and it actually builds trust with your audience rather than hurting it.</div>
     </div>
   </div>
 
   <div class="section-tag">Commission Rates by Category</div>
   <h3 class="section-title" style="font-size:1.8rem; margin-bottom:0.5rem;">What you can <em>actually earn</em></h3>
-  <p class="section-sub" style="margin-bottom:0;">Rates vary widely. Digital products and software pay the most.</p>
+  <p class="section-sub" style="margin-bottom:0;">Rates vary a lot by product type. Physical products pay less (the margins are thin) — digital products and software pay the most.</p>
 
   <div class="commission-table">
     <div class="comm-cell">
@@ -1305,6 +1456,11 @@ footer {
   <h2 class="section-title">Platforms &<br><em>Marketplaces</em></h2>
   <p class="section-sub">Every card links directly to the real platform. Pick what fits your niche and sign up today.</p>
 
+  <div class="section-callout">
+    <p>This section is organized into three categories. <strong>Affiliate Networks</strong> are platforms where you sign up to earn commissions on product sales — no brand approval needed, just a link to share. <strong>Influencer Marketplaces</strong> are directories where brands actively search for creators to hire — you create a profile and deals come to you. <strong>Creator Tools</strong> are free or low-cost apps that make you look more professional and help you earn more.</p>
+    <p>You don't have to use all of these. Pick <strong>one affiliate network</strong> and <strong>one marketplace</strong> to start. That's more than enough to get your first deal.</p>
+  </div>
+
   <div class="tab-nav">
     <button class="tab-btn active" onclick="switchTab('aff', this)">Affiliate Networks</button>
     <button class="tab-btn" onclick="switchTab('mkt', this)">Influencer Marketplaces</button>
@@ -1313,39 +1469,39 @@ footer {
 
   <div id="tab-aff" class="tab-panel active">
     <a href="https://affiliate-program.amazon.com" target="_blank" class="p-card">
-      <div class="p-badge">Best for Beginners</div>
+      <div class="p-badge">Best for Beginners — Start Here</div>
       <div class="p-name">Amazon Associates</div>
-      <div class="p-desc">The easiest affiliate program to join. Covers nearly every product category. 1–10% commissions with instant approval for most creators.</div>
+      <div class="p-desc">The easiest affiliate program to join — Amazon sells almost everything, so no matter what your niche is, there's something relevant to link to. Sign up, search for a product, click "Get link," and you're done. Approval is usually instant. Commissions are 1–10% depending on the product category. <em>Best starting point for most beginners.</em></div>
       <div class="p-link">affiliate-program.amazon.com</div>
     </a>
     <a href="https://ltk.com/become-a-creator" target="_blank" class="p-card">
-      <div class="p-badge">Fashion & Lifestyle</div>
+      <div class="p-badge">Fashion & Lifestyle Creators</div>
       <div class="p-name">LTK (LikeToKnow.it)</div>
-      <div class="p-desc">The go-to platform for fashion, beauty, and home influencers. App-based shopping feed your followers can browse directly.</div>
+      <div class="p-desc">LTK is a platform specifically built for lifestyle creators. Once approved, you get your own "shop" page where followers can browse everything you recommend. You earn a commission when they purchase. It's particularly popular on Instagram and TikTok. <em>Requires an application — they look for consistent posting and a clear aesthetic.</em></div>
       <div class="p-link">ltk.com/become-a-creator</div>
     </a>
     <a href="https://www.shareasale.com/info/affiliates.cfm" target="_blank" class="p-card">
-      <div class="p-badge">Large Network</div>
+      <div class="p-badge">Huge Brand Variety</div>
       <div class="p-name">ShareASale</div>
-      <div class="p-desc">Thousands of brands across every niche. Great for finding programs tied to products you already genuinely recommend.</div>
+      <div class="p-desc">ShareASale is a marketplace that connects you to thousands of individual brands all in one place — everything from clothing companies to software tools. You apply to each brand's program separately, and once approved you get their specific affiliate links. Great if you want to work with smaller or niche brands. <em>Free to join the network, then apply to individual brands.</em></div>
       <div class="p-link">shareasale.com</div>
     </a>
     <a href="https://impact.com/partners/affiliates/" target="_blank" class="p-card">
       <div class="p-badge">Major Brands</div>
       <div class="p-name">Impact</div>
-      <div class="p-desc">Used by Adidas, Airbnb, L'Oréal, and other household names. More professional setup — ideal as your following grows.</div>
+      <div class="p-desc">Impact is a more professional affiliate network used by major brands like Adidas, Airbnb, and L'Oréal. It has more features and reporting than beginner platforms, which also means a slightly steeper learning curve. <em>Good to sign up now and grow into — some big brands only run their programs here.</em></div>
       <div class="p-link">impact.com/partners/affiliates</div>
     </a>
     <a href="https://rakuten.com/affiliates/overview/" target="_blank" class="p-card">
       <div class="p-badge">Established Network</div>
       <div class="p-name">Rakuten Advertising</div>
-      <div class="p-desc">One of the oldest and most trusted affiliate networks. Wide variety of brand partnerships across retail, travel, and lifestyle.</div>
+      <div class="p-desc">Rakuten (formerly LinkShare) is one of the oldest affiliate networks — it's been around since 1996 and works with thousands of well-known retail brands. If a brand you love isn't on Amazon Associates or ShareASale, there's a good chance they have a program on Rakuten. <em>Sign up free and browse available programs.</em></div>
       <div class="p-link">rakuten.com/affiliates</div>
     </a>
     <a href="https://www.clickbank.com/affiliates/" target="_blank" class="p-card">
-      <div class="p-badge">Digital Products</div>
+      <div class="p-badge">Digital Products — Highest Commissions</div>
       <div class="p-name">ClickBank</div>
-      <div class="p-desc">Specializes in digital products and online courses. Some of the highest commission rates available — up to 75% per sale.</div>
+      <div class="p-desc">ClickBank focuses almost entirely on digital products — online courses, e-books, software, and subscriptions. Because these products have no physical manufacturing cost, sellers can afford to pay much higher commissions — sometimes 50–75%. <em>Best for creators in niches like fitness, self-improvement, business, or education.</em></div>
       <div class="p-link">clickbank.com/affiliates</div>
     </a>
   </div>
@@ -1354,64 +1510,64 @@ footer {
     <a href="https://www.aspire.io" target="_blank" class="p-card">
       <div class="p-badge">Full-Service Platform</div>
       <div class="p-name">AspireIQ</div>
-      <div class="p-desc">One of the top influencer marketing platforms. Brands actively search here for creators of all sizes — a great place to be found.</div>
+      <div class="p-desc">AspireIQ is one of the largest influencer marketing platforms. Brands use it to search for creators by niche, platform, location, follower count, and engagement rate. You create a profile and become searchable. When a brand finds you, they'll reach out through the platform with a partnership offer. <em>Free to join as a creator.</em></div>
       <div class="p-link">aspire.io</div>
     </a>
     <a href="https://collabstr.com" target="_blank" class="p-card">
-      <div class="p-badge">Great for Beginners</div>
+      <div class="p-badge">Best for Beginners</div>
       <div class="p-name">Collabstr</div>
-      <div class="p-desc">Set your own rates, list your services, and have brands come to you. Simple interface perfect for those just starting out.</div>
+      <div class="p-desc">Collabstr works like a freelance marketplace (think Fiverr, but for influencers). You create a profile, list exactly what you offer (an Instagram post, a TikTok video, a YouTube mention), set your own price, and brands browse and purchase your services directly. No negotiating needed. <em>Highly recommended as your very first marketplace to join.</em></div>
       <div class="p-link">collabstr.com</div>
     </a>
     <a href="https://creator.co" target="_blank" class="p-card">
       <div class="p-badge">Micro-Influencer Friendly</div>
       <div class="p-name">Creator.co</div>
-      <div class="p-desc">Designed specifically for micro and nano influencers. Low follower minimums and a browsable marketplace of brand deals.</div>
+      <div class="p-desc">Creator.co is specifically designed for smaller creators — you can join with as few as 1,000 followers. They have a marketplace of brand campaigns you can apply to, and brands can also find and invite you. Think of it as a job board where every listing is an influencer opportunity. <em>Great for your first paid collaboration.</em></div>
       <div class="p-link">creator.co</div>
     </a>
     <a href="https://grin.co" target="_blank" class="p-card">
       <div class="p-badge">Enterprise Brands</div>
       <div class="p-name">Grin</div>
-      <div class="p-desc">Used by major DTC brands to find creators. Getting accepted here signals to the industry that you're a serious professional.</div>
+      <div class="p-desc">Grin is a tool used by large DTC (Direct-to-Consumer) brands — companies that sell directly to customers online rather than through stores. Brands like Cuts Clothing and MVMT use Grin to manage their entire influencer program. Being on their radar means a brand is actively managing their creator relationships at scale. <em>Worth creating a profile as you grow.</em></div>
       <div class="p-link">grin.co</div>
     </a>
     <a href="https://influencity.com" target="_blank" class="p-card">
       <div class="p-badge">Analytics-Driven</div>
       <div class="p-name">Influencity</div>
-      <div class="p-desc">Data-driven platform that connects brands with creators. Provides deep audience analytics which brands particularly appreciate.</div>
+      <div class="p-desc">Influencity is a data-heavy platform brands use to analyze creator audiences before partnering. When a brand finds you here, they already know a lot about your followers — their age, location, interests, and how authentic your engagement looks. Being listed here lends instant credibility. <em>Sign up and let the data work in your favor.</em></div>
       <div class="p-link">influencity.com</div>
     </a>
     <a href="https://www.brandsmeetcreators.com" target="_blank" class="p-card">
       <div class="p-badge">Direct Partnerships</div>
       <div class="p-name">Brands Meet Creators</div>
-      <div class="p-desc">A direct marketplace focused on authentic, long-term brand partnerships rather than one-off sponsored posts.</div>
+      <div class="p-desc">A more straightforward marketplace focused on long-term brand-creator relationships rather than one-off posts. Brands here tend to be looking for ongoing ambassadors — creators who genuinely align with their values and will promote them consistently over time. <em>Great for building real, lasting brand relationships.</em></div>
       <div class="p-link">brandsmeetcreators.com</div>
     </a>
   </div>
 
   <div id="tab-tools" class="tab-panel">
     <a href="https://linktr.ee" target="_blank" class="p-card">
-      <div class="p-badge">Essential — Start Here</div>
+      <div class="p-badge">Essential — Do This First</div>
       <div class="p-name">Linktree</div>
-      <div class="p-desc">A single bio link page that holds all your affiliate links, social profiles, and content. Free plan available. Absolute must-have for any creator.</div>
+      <div class="p-desc">Most social platforms only allow one clickable link in your bio. Linktree solves this by giving you one link that opens a mini page with buttons to all your other links — your affiliate programs, your YouTube, your Etsy, your email signup, everything. It's free and takes 5 minutes to set up. <em>Every influencer uses this or something similar — it's non-negotiable.</em></div>
       <div class="p-link">linktr.ee</div>
     </a>
     <a href="https://www.canva.com" target="_blank" class="p-card">
-      <div class="p-badge">Free Media Kit Builder</div>
+      <div class="p-badge">Free — Build Your Media Kit Here</div>
       <div class="p-name">Canva</div>
-      <div class="p-desc">Build a professional media kit, pitch deck, and social content for free. Search "media kit" in Canva templates to start in under 5 minutes.</div>
+      <div class="p-desc">Canva is a free online design tool that requires zero design experience. It has thousands of pre-built templates for media kits, social posts, story graphics, pitch decks, and more. You just click a template, swap in your photos and text, and download a professional-looking PDF. <em>Go to canva.com → search "influencer media kit" → pick a template and customize it.</em></div>
       <div class="p-link">canva.com</div>
     </a>
     <a href="https://www.linkedin.com" target="_blank" class="p-card">
-      <div class="p-badge">Find Brand Contacts</div>
+      <div class="p-badge">Find Brand Contacts Here</div>
       <div class="p-name">LinkedIn</div>
-      <div class="p-desc">Find the PR manager or brand partnerships contact at any company. Search "[Brand Name] influencer marketing" to find the right person.</div>
+      <div class="p-desc">LinkedIn is a professional social network used by business people. It's where you'll find the actual humans at brands — the Marketing Manager, the PR Coordinator, the Brand Partnerships Director. Search a brand's name, find their company page, then filter employees by job title to find the right contact. <em>This is how you get a real email address instead of a generic "info@" inbox.</em></div>
       <div class="p-link">linkedin.com</div>
     </a>
     <a href="https://later.com/blog/influencer-rate-calculator/" target="_blank" class="p-card">
-      <div class="p-badge">Know Your Worth</div>
+      <div class="p-badge">Know What to Charge</div>
       <div class="p-name">Later's Rate Calculator</div>
-      <div class="p-desc">Free tool to estimate exactly what you should charge for sponsored posts based on follower count, engagement rate, and your niche.</div>
+      <div class="p-desc">One of the most common beginner mistakes is undercharging — or not knowing what to charge at all. Later's free rate calculator takes your follower count, engagement rate, and niche, and spits out a suggested price range for sponsored posts. <em>Use this before every pitch so you walk in knowing your worth.</em></div>
       <div class="p-link">later.com/blog/influencer-rate-calculator</div>
     </a>
   </div>
@@ -1422,6 +1578,11 @@ footer {
   <div class="section-tag">Section 04</div>
   <h2 class="section-title">The Perfect<br><em>Brand Pitch</em></h2>
   <p class="section-sub">Be specific. Be brief. Make it easy for them to say yes.</p>
+
+  <div class="section-callout">
+    <p><strong>What is a "pitch"?</strong> A pitch is simply you reaching out to a brand and proposing a collaboration. It's no different from applying for a job — you're presenting yourself as someone worth investing in and suggesting a specific way you could work together.</p>
+    <p>The biggest mistake beginners make is sending a vague message like "I'd love to work together!" That tells the brand nothing. Instead, use the 5-part formula below. A well-structured pitch takes less than 5 minutes for a brand to read and gives them everything they need to say yes — without having to ask you a dozen follow-up questions.</p>
+  </div>
 
   <div class="pitch-layout">
     <div class="pitch-steps">
@@ -1490,46 +1651,51 @@ footer {
   <h2 class="section-title">Your Media Kit<br><em>Checklist</em></h2>
   <p class="section-sub">Build this before you pitch anyone. Use <a href="https://canva.com" target="_blank" style="color:var(--gold)">Canva.com</a> — free media kit templates are ready instantly.</p>
 
+  <div class="section-callout">
+    <p><strong>Think of your media kit as your résumé for brand deals.</strong> When you apply for a job, you send a résumé that summarizes your experience and skills. A media kit does the same thing, but for your social media presence. It's a clean, one-page PDF that answers every question a brand might have before agreeing to work with you.</p>
+    <p>You do <em>not</em> need to be a graphic designer. Go to <a href="https://canva.com" target="_blank" style="color:var(--gold); font-weight:500;">canva.com</a>, create a free account, search "influencer media kit," pick any template you like, swap in your own information and photos, and download it as a PDF. The whole thing takes about 30 minutes.</p>
+  </div>
+
   <div class="kit-grid">
     <div class="kit-item">
       <div class="kit-check">✓</div>
       <div class="kit-title">Profile Photo & Bio</div>
-      <div class="kit-desc">Professional headshot and 2–3 sentences describing your niche, content style, and what makes your audience unique.</div>
+      <div class="kit-desc">A professional headshot (good lighting, clean background — your phone camera is fine) and 2–3 sentences that describe your niche, who your audience is, and what makes your content unique. Example: <em>"Fitness creator focused on at-home workouts for busy parents. 4,200 followers on Instagram and TikTok. Known for quick, equipment-free routines."</em></div>
     </div>
     <div class="kit-item">
       <div class="kit-check">✓</div>
       <div class="kit-title">Follower Count by Platform</div>
-      <div class="kit-desc">Instagram, TikTok, YouTube, Pinterest — list each separately with current follower numbers and growth trends.</div>
+      <div class="kit-desc">List every platform you're active on — Instagram, TikTok, YouTube, Pinterest, etc. — with your current follower count next to each one. Be honest; brands can verify this instantly. Even if your numbers are small, showing multiple platforms demonstrates range.</div>
     </div>
     <div class="kit-item">
       <div class="kit-check">✓</div>
       <div class="kit-title">Engagement Rate</div>
-      <div class="kit-desc">(Avg likes + comments) ÷ followers × 100. Highlight this if it's above 3% — it's often more valuable than raw follower count.</div>
+      <div class="kit-desc">Calculate this yourself: add up your average likes and comments on recent posts, divide by your follower count, then multiply by 100. Example: 120 avg interactions ÷ 2,000 followers × 100 = <strong>6% engagement rate</strong>. Anything above 3% is considered strong — highlight it prominently.</div>
     </div>
     <div class="kit-item">
       <div class="kit-check">✓</div>
       <div class="kit-title">Audience Demographics</div>
-      <div class="kit-desc">Age range, gender split, top locations. Find this in your platform's native analytics dashboard — brands need this to justify the partnership.</div>
+      <div class="kit-desc">This is data about your followers — their age range, gender split, and top countries or cities. You find this for free inside your platform's analytics: on Instagram go to <strong>Professional Dashboard → Audience</strong>. On TikTok go to <strong>Creator Tools → Analytics → Followers</strong>. Screenshot or copy these numbers directly.</div>
     </div>
     <div class="kit-item">
       <div class="kit-check">✓</div>
-      <div class="kit-title">Niche & Content Style</div>
-      <div class="kit-desc">Be specific: "sustainable fashion for women 25–35" beats "lifestyle content." The tighter your niche, the more valuable you are to the right brand.</div>
+      <div class="kit-title">Content Niche & Style</div>
+      <div class="kit-desc">Be as specific as possible about what you post and who it's for. <em>"Sustainable fashion for budget-conscious college students"</em> is far more powerful than <em>"fashion content."</em> The tighter your niche, the more valuable you are to the brands that fit that niche — even with a smaller following.</div>
     </div>
     <div class="kit-item">
       <div class="kit-check">✓</div>
       <div class="kit-title">Sample Content</div>
-      <div class="kit-desc">3–5 of your best posts or screenshots. No brand work yet? Use your own personal content — quality speaks for itself.</div>
+      <div class="kit-desc">Include 3–5 screenshots or thumbnails of your best posts. Choose content that would appeal to the type of brand you're pitching. No brand work yet? That's completely fine — use your best personal posts. The goal is to show quality and consistency, not necessarily sponsored experience.</div>
     </div>
     <div class="kit-item">
       <div class="kit-check">✓</div>
       <div class="kit-title">Contact Information</div>
-      <div class="kit-desc">A professional email address. Consider setting up a custom domain email — yourname@yourdomain.com signals serious intent.</div>
+      <div class="kit-desc">Include a professional email address. If your current email is something like <em>partygirl2005@gmail.com</em>, create a new one for your creator business — something like <em>yourname.creates@gmail.com</em> or <em>hello@yourname.com</em>. First impressions matter, and your email address is part of that.</div>
     </div>
     <div class="kit-item">
       <div class="kit-check">✓</div>
       <div class="kit-title">Services & Rates (Optional)</div>
-      <div class="kit-desc">What you offer: sponsored posts, reels, stories, UGC, affiliate. Rates are optional for first outreach — negotiate after they show interest.</div>
+      <div class="kit-desc">You can optionally list what you offer — sponsored Instagram posts, TikTok videos, YouTube integrations, Stories, UGC (photos/videos brands use in their own ads). For your first outreach, leaving rates off is fine — it opens the door for a conversation. Add them once you're more established and know your worth. Use <a href="https://later.com/blog/influencer-rate-calculator/" target="_blank" style="color:var(--gold)">Later's Rate Calculator</a> to get a starting number.</div>
     </div>
   </div>
 </section>
@@ -1545,7 +1711,18 @@ footer {
 <section id="resources">
   <div class="section-tag">Section 06</div>
   <h2 class="section-title">All Links &<br><em>Resources</em></h2>
-  <p class="section-sub">Every platform mentioned in one place. Click any card to go directly to the site.</p>
+  <p class="section-sub">Every platform mentioned in this guide — all in one place. Click any card to go directly to the site.</p>
+
+  <div class="section-callout">
+    <p><strong>Not sure where to start?</strong> Here's the simplest possible action plan for your first week:</p>
+    <p>
+      <strong>Day 1:</strong> Create a <a href="https://linktr.ee" target="_blank" style="color:var(--gold)">Linktree</a> account and set it as your bio link on every platform.<br>
+      <strong>Day 2:</strong> Sign up for <a href="https://affiliate-program.amazon.com" target="_blank" style="color:var(--gold)">Amazon Associates</a> and generate links for 3–5 products you already use and love.<br>
+      <strong>Day 3:</strong> Open <a href="https://www.canva.com" target="_blank" style="color:var(--gold)">Canva</a>, search "influencer media kit," and build yours — takes about 30 minutes.<br>
+      <strong>Day 4:</strong> Create a profile on <a href="https://collabstr.com" target="_blank" style="color:var(--gold)">Collabstr</a>, fill it out 100%, and list your first service.<br>
+      <strong>Day 5:</strong> Pick one brand you genuinely love and start engaging with their posts daily. Return to Section 04 in two weeks and send your first pitch email.
+    </p>
+  </div>
 
   <div class="resources-grid">
     <a href="https://affiliate-program.amazon.com" target="_blank" class="r-card">
